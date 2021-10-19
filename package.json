@@ -8,6 +8,7 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
+    "@beyonk/eslint-config": "^6.0.0",
     "@sveltejs/kit": "next",
     "eslint": "^7.32.0",
     "eslint-plugin-svelte3": "^3.2.1",

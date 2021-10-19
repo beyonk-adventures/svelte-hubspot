@@ -41,9 +41,22 @@ Pass `disabled={true}` if you require tracking to be enabled programmatically, e
 </script>
 ```
 
-### Events
+### Tracking code API
 
-`load`: emitted on load of tracking code
+The component instance exposes an interface to allow you to push actions to the HubSpot tracking queue. You should still push the current path and submit `identify` calls before the tracking code is loaded (if at all); on load, an initial `trackPageView` is implicitly made to process items already in the queue.
+
+An example of how the current page can be tracked in a SvelteKit/Sapper app using the `$page` store follows:
+
+```svelte
+onMount(() => {
+  const unsubscribe = page.subscribe(async ($page) => {
+    await tick()
+    hs.setPageView($page)
+  })
+
+  return unsubscribe
+})
+```
 
 ## Developing
 

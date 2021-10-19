@@ -1,8 +1,6 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { onMount } from 'svelte'
   import loader from '@beyonk/async-script-loader'
-
-  const dispatch = createEventDispatcher();
 
   export let hubId
   export let disabled = false
@@ -11,18 +9,36 @@
   const globalName = '_hsp'
 
   onMount(() => {
-    if (disabled) { return }
+    window._hsq = window._hsq || []
 
-    init()
+    if (!disabled) {
+      init()
+    }
   })
+
+  function loaded () {
+    return !!window[globalName]
+  }
 
   export function init () {
     loader(
       [
         { type: 'script', async: true, defer: true, url },
       ],
-      () => !!window[globalName],
-      () => dispatch('load')
+      loaded,
+      trackPageView
     )
+  }
+
+  export function setPageView ({ path, query }) {
+    _hsq.push([ 'setPath', `${path}?${query}` ])
+
+    if (loaded()) {
+      trackPageView()
+    }
+  }
+
+  function trackPageView () {
+    _hsq.push([ 'trackPageView' ])
   }
 </script>

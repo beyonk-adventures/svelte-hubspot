@@ -1,1 +1,3 @@
-export { default as HubSpotTracking } from './HubSpotTracking.svelte'
+import HubSpotTracking from './HubSpotTracking.svelte'
+
+export { HubSpotTracking }

@@ -25,38 +25,19 @@ npm i -D @beyonk/svelte-hubspot
 </script>
 ```
 
-### The `disabled` property (optional)
+### Properties
 
-Pass `disabled={true}` if you require tracking to be enabled programmatically, e.g. as an upshot of user consent of GDPR policy.
-
-```svelte
-<HubSpotTracking bind:this={hs} hubId="123456" disabled={true} />
-
-<script>
-  let hs
-
-  function enableTracking () {
-    hs.init();
-  }
-</script>
-```
+| prop | type | default | description |
+| ---- | ---- | ------- | ----------- |
+| `subdomain` | string | `'js'` | HubSpot tracking code may be served via region-specific CDN, denoted by the subdomain of `hs-scripts.com` – this specific asset must be used |
+| `hubId` | string | `undefined` | required; the HupSpot account id |
+| `disabled` | boolean | `false` | pass `true` if you require tracking to be enabled programmatically, e.g. as an upshot of user consent of GDPR policy (see example code) |
 
 ### Tracking code API
 
-The component instance exposes an interface to allow you to push actions to the HubSpot tracking queue. You should still push the current path and submit `identify` calls before the tracking code is loaded (if at all); on load, an initial `trackPageView` is implicitly made to process items already in the queue.
+The component instance exposes an interface to allow you to push actions to the HubSpot tracking queue. Note that you should still push the current path and submit `identify` calls before the tracking code is loaded (if at all); on load, an initial `trackPageView` is implicitly made to process items already in the queue.
 
-An example of how the current page can be tracked in a SvelteKit/Sapper app using the `$page` store follows:
-
-```svelte
-onMount(() => {
-  const unsubscribe = page.subscribe(async ($page) => {
-    await tick()
-    hs.setPageView($page)
-  })
-
-  return unsubscribe
-})
-```
+Check out the example code to see how the current page could be tracked in a SvelteKit/Sapper app.
 
 ## Developing
 

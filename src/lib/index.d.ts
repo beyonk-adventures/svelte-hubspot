@@ -2,6 +2,7 @@ declare module "@beyonk/svelte-hubspot" {
   import { SvelteComponentTyped } from 'svelte'
 
   export interface HubSpotTrackingProps {
+    subdomain?: string
     hubId: string
     disabled?: boolean
   }

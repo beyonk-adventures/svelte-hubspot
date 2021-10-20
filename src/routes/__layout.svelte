@@ -1,5 +1,6 @@
 <HubSpotTracking
   bind:this={hs}
+  subdomain="js-eu1"
   hubId={import.meta.env.VITE_HUB_ID}
   disabled={true}
 />
@@ -15,22 +16,20 @@
 </footer>
 
 <script>
-  import { onMount, tick } from 'svelte'
-  import { getStores } from '$app/stores'
+  import { onMount } from 'svelte'
+  import { navigating, page } from '$app/stores'
   import { HubSpotTracking } from '$lib'
-
-  const { page } = getStores();
 
   let hs
   let consented = false
 
-  onMount(() => {
-    const unsubscribe = page.subscribe(async ($page) => {
-      await tick()
-      hs.setPageView($page)
-    })
+  $: if ($navigating) {
+    hs.setPageView($navigating.to)
+  }
 
-    return unsubscribe
+  onMount(() => {
+    // initial navigation
+    hs.setPageView($page)
   })
 
   function consent () {

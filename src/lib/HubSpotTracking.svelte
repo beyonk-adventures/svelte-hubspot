@@ -2,10 +2,11 @@
   import { onMount } from 'svelte'
   import loader from '@beyonk/async-script-loader'
 
+  export let subdomain = 'js'
   export let hubId
   export let disabled = false
 
-  const url = `//js.hs-scripts.com/${hubId}.js`
+  const url = `//${subdomain}.hs-scripts.com/${hubId}.js`
   const globalName = '_hsp'
 
   onMount(() => {

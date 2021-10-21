@@ -31,6 +31,16 @@
     )
   }
 
+  export function setIdentity (email, properties = {}) {
+    _hsq.push([ 'identify', { ...properties, email } ])
+
+    if (loaded()) {
+      trackPageView()
+    } else {
+      // identity will be pushed with the initial `trackPageView` call on load
+    }
+  }
+
   export function setPath ({ path, query }, track = loaded()) {
     _hsq.push([ 'setPath', `${path}?${new URLSearchParams(query)}` ])
 

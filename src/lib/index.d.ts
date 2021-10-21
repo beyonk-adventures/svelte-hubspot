@@ -9,6 +9,7 @@ declare module "@beyonk/svelte-hubspot" {
 
   export class HubSpotTracking extends SvelteComponentTyped<HubSpotTrackingProps> {
     init(): void
+    setIdentity(email: string, properties?: { [key: string]: any }): void
     setPath(
       page: {
         path: string,

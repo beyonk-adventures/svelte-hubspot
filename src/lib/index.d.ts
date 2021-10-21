@@ -9,6 +9,12 @@ declare module "@beyonk/svelte-hubspot" {
 
   export class HubSpotTracking extends SvelteComponentTyped<HubSpotTrackingProps> {
     init(): void
-    setPath(page: { path: string, query: URLSearchParams }, track?: boolean): void
+    setPath(
+      page: {
+        path: string,
+        query: { [key: string]: string } | URLSearchParams
+      },
+      track?: boolean
+    ): void
   }
 }

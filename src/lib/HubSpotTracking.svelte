@@ -32,7 +32,7 @@
   }
 
   export function setPath ({ path, query }, track = loaded()) {
-    _hsq.push([ 'setPath', `${path}?${query}` ])
+    _hsq.push([ 'setPath', `${path}?${new URLSearchParams(query)}` ])
 
     if (track) {
       trackPageView()

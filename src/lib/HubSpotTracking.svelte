@@ -31,10 +31,10 @@
     )
   }
 
-  export function setPageView ({ path, query }) {
+  export function setPath ({ path, query }, track = loaded()) {
     _hsq.push([ 'setPath', `${path}?${query}` ])
 
-    if (loaded()) {
+    if (track) {
       trackPageView()
     }
   }

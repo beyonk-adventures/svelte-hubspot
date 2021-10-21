@@ -24,12 +24,12 @@
   let consented = false
 
   $: if ($navigating) {
-    hs.setPageView($navigating.to)
+    hs.setPath($navigating.to)
   }
 
   onMount(() => {
     // initial navigation
-    hs.setPageView($page)
+    hs.setPath($page)
   })
 
   function consent () {

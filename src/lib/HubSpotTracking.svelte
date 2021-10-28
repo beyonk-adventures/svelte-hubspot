@@ -1,20 +1,26 @@
 <script>
-  import { onMount } from 'svelte'
+  import { onMount, tick } from 'svelte'
   import loader from '@beyonk/async-script-loader'
 
   export let subdomain = 'js'
   export let hubId
-  export let disabled = false
+  export let doNotTrack = false
 
   const url = `//${subdomain}.hs-scripts.com/${hubId}.js`
   const globalName = '_hsp'
 
-  onMount(() => {
+  let isMounted = false
+
+  $: if (isMounted) {
+    setDoNotTrackCookie(doNotTrack ? 'yes' : 'no')
+  }
+
+  onMount(async () => {
     window._hsq = window._hsq || []
 
-    if (!disabled) {
-      init()
-    }
+    isMounted = true
+    await tick()
+    init()
   })
 
   function loaded () {
@@ -29,6 +35,17 @@
       loaded,
       trackPageView
     )
+  }
+
+  export function setDoNotTrackCookie (value) {
+    const cookie = '__hs_do_not_track'
+
+    const expiry = new Date()
+    expiry.setMonth(expiry.getMonth() + 13)
+
+    document.cookie = `${cookie}=${value};Expires=${expiry.toUTCString()}`
+
+    trackPageView()
   }
 
   export function setIdentity (email, properties = {}) {
@@ -50,6 +67,7 @@
   }
 
   function trackPageView () {
+    // __hs_do_not_track cookie will be honoured
     _hsq.push([ 'trackPageView' ])
   }
 </script>

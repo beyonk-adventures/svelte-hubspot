@@ -31,7 +31,7 @@ npm i -D @beyonk/svelte-hubspot
 | ---- | ---- | ------- | ----------- |
 | `subdomain` | string | `'js'` | HubSpot tracking code may be served via region-specific CDN, denoted by the subdomain of `hs-scripts.com` – this specific asset must be used |
 | `hubId` | string | `undefined` | required; the HupSpot account id |
-| `disabled` | boolean | `false` | pass `true` if you require tracking to be enabled programmatically, e.g. as an upshot of user consent of GDPR policy (see example code) |
+| `doNotTrack` | boolean | `false` | pass `true` if you do not want page views to be tracked, e.g. before user consent of GDPR policy (see example code) |
 
 ### Tracking code API
 

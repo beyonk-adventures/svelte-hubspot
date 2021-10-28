@@ -2,7 +2,7 @@
   bind:this={hs}
   subdomain="js-eu1"
   hubId={import.meta.env.VITE_HUB_ID}
-  disabled={!consented}
+  doNotTrack={!consented}
 />
 
 <main>
@@ -23,17 +23,8 @@
   import { navigating, page } from '$app/stores'
   import { HubSpotTracking } from '$lib'
 
-  const cookie = '__hs_do_not_track'
-
   let hs
-  let consented =
-    browser &&
-    document.cookie
-      .split('; ')
-      .reduce((acc, c) => {
-        const [name, value] = c.split('=')
-        return { ...acc, [name]: value }
-      }, {})[cookie] === 'no'
+  let consented = false
 
   $: if ($navigating) {
     hs.setPath($navigating.to)
@@ -46,12 +37,9 @@
 
   function consent () {
     consented = true
-    document.cookie = `${cookie}=no;max-age=${60*60*24*365}`
-    hs.init()
   }
 
   function revoke () {
-    document.cookie = `${cookie}=yes;max-age=${60*60*24*365}`
     consented = false;
   }
 </script>

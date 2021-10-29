@@ -37,7 +37,7 @@
     )
   }
 
-  export function setDoNotTrackCookie (value) {
+  function setDoNotTrackCookie (value) {
     const cookie = '__hs_do_not_track'
 
     const expiry = new Date()

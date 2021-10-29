@@ -5,6 +5,7 @@ declare module "@beyonk/svelte-hubspot" {
     subdomain?: string
     hubId: string
     doNotTrack?: boolean
+    loadChatWidgetImmediately?: boolean
   }
 
   export class HubSpotTracking extends SvelteComponentTyped<HubSpotTrackingProps> {
@@ -17,5 +18,6 @@ declare module "@beyonk/svelte-hubspot" {
       },
       track?: boolean
     ): void
+    loadChatWidget(): void
   }
 }

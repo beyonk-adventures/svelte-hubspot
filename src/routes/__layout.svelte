@@ -3,6 +3,7 @@
   subdomain="js-eu1"
   hubId={import.meta.env.VITE_HUB_ID}
   doNotTrack={!consented}
+  loadChatWidgetImmediately={false}
 />
 
 <main>
@@ -37,6 +38,7 @@
 
   function consent () {
     consented = true
+    hs.loadChatWidget()
   }
 
   function revoke () {

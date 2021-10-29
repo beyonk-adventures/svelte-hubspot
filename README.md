@@ -31,7 +31,10 @@ npm i -D @beyonk/svelte-hubspot
 | ---- | ---- | ------- | ----------- |
 | `subdomain` | string | `'js'` | HubSpot tracking code may be served via region-specific CDN, denoted by the subdomain of `hs-scripts.com` – this specific asset must be used |
 | `hubId` | string | `undefined` | required; the HupSpot account id |
-| `doNotTrack` | boolean | `false` | pass `true` if you do not want page views to be tracked, e.g. before user consent of GDPR policy (see example code) |
+| `doNotTrack` | boolean | `false` | pass `true` if you do not want page views to be tracked, e.g. before user consent of GDPR policy |
+| `loadChatWidgetImmediately` | boolean | `true` | pass `false` if you don't want the chat widget (where applicable) to be implicitly loaded — use `loadChatWidget()` to explicitly initialise chat |
+
+(See demo code for example usage.)
 
 ### Tracking code API
 

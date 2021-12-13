@@ -13,16 +13,26 @@
   let isMounted = false
   let isChatWidgetLoaded = false
 
+  function onConversationsApiReady () {
+    const status = window.HubSpotConversations.widget.status()
+
+    isChatWidgetLoaded = status.loaded || (status.hasOwnProperty('pending') && !status.pending)
+  }
+
+  const hsConversationsSettings = {
+    loadImmediately: loadChatWidgetImmediately
+  }
+
+  const hsConversationsOnReady = [ onConversationsApiReady ]
+
   $: if (isMounted) {
     setDoNotTrackCookie(doNotTrack ? 'yes' : 'no')
   }
 
   onMount(async () => {
     window._hsq = window._hsq || []
-    window.hsConversationsSettings = {
-      loadImmediately: loadChatWidgetImmediately
-    }
-    window.hsConversationsOnReady = [onConversationsApiReady]
+    window.hsConversationsSettings = hsConversationsSettings
+    window.hsConversationsOnReady = hsConversationsOnReady
 
     isMounted = true
     await tick()
@@ -43,12 +53,6 @@
     )
   }
 
-  function onConversationsApiReady () {
-    const status = window.HubSpotConversations.widget.status()
-
-    isChatWidgetLoaded = status.loaded || (status.hasOwnProperty('pending') && !status.pending)
-  }
-
   function setDoNotTrackCookie (value) {
     const cookie = '__hs_do_not_track'
 
@@ -63,11 +67,7 @@
   export function setIdentity (email, properties = {}) {
     _hsq.push([ 'identify', { ...properties, email } ])
 
-    if (isLoaded()) {
-      trackPageView()
-    } else {
-      // identity will be pushed with the initial `trackPageView` call on load
-    }
+    isLoaded() && trackPageView()
   }
 
   export function setPath ({ path, query }) {
@@ -78,7 +78,6 @@
   }
 
   function trackPageView () {
-    // __hs_do_not_track cookie will be honoured
     _hsq.push([ 'trackPageView' ])
   }
 
@@ -88,7 +87,7 @@
     if (widget) {
       widget.load()
     } else {
-      window.hsConversationsOnReady.push(loadChatWidget)
+      hsConversationsOnReady.push(loadChatWidget)
     }
   }
 

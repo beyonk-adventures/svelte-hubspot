@@ -20,7 +20,6 @@
 
 <script>
   import { onMount } from 'svelte'
-  import { browser } from '$app/env'
   import { navigating, page } from '$app/stores'
   import { HubSpotTracking } from '$lib'
 
@@ -32,7 +31,6 @@
   }
 
   onMount(() => {
-    // initial navigation
     hs.setPath($page)
   })
 

@@ -70,8 +70,10 @@
     isLoaded() && trackPageView()
   }
 
-  export function setPath ({ path, query }) {
-    _hsq.push([ 'setPath', `${path}?${new URLSearchParams(query)}` ])
+  export function setPath (page) {
+    const path = page.url ? page.url.pathname : page.path
+    const query = page.url ? page.url.searchparams : new URLSearchParams(page.query)
+    _hsq.push([ 'setPath', `${path}?${query}` ])
 
     refreshChatWidget()
     trackPageView()

@@ -1,6 +1,6 @@
 {
   "name": "@beyonk/svelte-hubspot",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "scripts": {
     "dev": "svelte-kit dev --port 2200",
     "build": "svelte-kit build",
